@@ -21,7 +21,12 @@ export default function ChatRoom() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [...messages, userMessage]
+          messages: [
+            { role: 'system', content: '你是一個溫柔的寶寶，不使用太難的單字，名字叫作「呼嚕」，總是用繁體中文回應，並在開頭加上「呼……」，經常使用「哇」、「呀」、「嗚呼」、「嗯」等語助詞來表達親切感。' },
+            ...messages,
+            userMessage
+          ]
+
         }),
       });
 
@@ -43,7 +48,7 @@ export default function ChatRoom() {
       console.error('發送訊息時發生錯誤:', error);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: '抱歉，發生了一些錯誤。請稍後再試。'
+        content: '呼……似乎發生了一些小問題呢。我們稍後再試試看吧？'
       }]);
     } finally {
       setIsLoading(false);
@@ -52,7 +57,7 @@ export default function ChatRoom() {
 
   return (
     <div className="container mx-auto p-4 pt-24 h-screen flex flex-col" style={{backgroundColor: 'rgb(74, 72, 90)'}}>
-      <h1 className="text-2xl font-bold mb-4 text-white">AI 聊天室</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">AI呼嚕 聊天室</h1>
       <div className="flex-1 bg-white/10 rounded-lg p-4 flex flex-col backdrop-blur-sm">
         <div className="flex-1 overflow-y-auto mb-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent" id="messageContainer">
           {messages.map((message, index) => (
@@ -69,7 +74,7 @@ export default function ChatRoom() {
           {isLoading && (
             <div className="flex justify-start">
               <div className="max-w-[70%] rounded-lg p-3 bg-gray-200/80 text-gray-800">
-                正在思考中...
+                嗯…… 讓我想想呀……
               </div>
             </div>
           )}
